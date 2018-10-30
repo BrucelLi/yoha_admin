@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateYohaAdminPermissionsTable extends Migration
+class CreateAdminPermissionRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateYohaAdminPermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('yoha_admin_permissions', function (Blueprint $table) {
+        Schema::create('admin_permission_role', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url', 300)->comment('权限的路由');
-            $table->string('name', 100)->comment('权限的名称');
-            $table->string('desc', 200)->comment('权限的描述');
+            $table->integer('role_id')->comment('角色id');
+            $table->integer('permission_id')->comment('权限id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateYohaAdminPermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('yoha_admin_permissions');
+        Schema::dropIfExists('admin_permission_role');
     }
 }

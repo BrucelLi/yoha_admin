@@ -18,8 +18,16 @@ Route::get('/', function () {
 Route::group(
     [
         'namespace' => 'Admin',
-        'prefix'    => 'test',
+        'prefix'    => 'admin',
     ],
     function () {
         Route::get('/test', 'TestController@test');
-    });
+        Route::group(
+            [],
+            function () {
+                Route::get('/captcha', 'LoginController@getCaptcha');
+                Route::post('/reg', 'LoginController@reg');
+            }
+        );
+    }
+);

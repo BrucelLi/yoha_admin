@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateYohaAdminUserRoleTable extends Migration
+class CreateAdminUserRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateYohaAdminUserRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('yoha_admin_user_role', function (Blueprint $table) {
+        Schema::create('admin_user_role', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50)->comment('角色名称');
             $table->string('tag', 50)->comment('英文标签');
@@ -29,6 +29,6 @@ class CreateYohaAdminUserRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('yoha_admin_user_role');
+        Schema::dropIfExists('admin_user_role');
     }
 }

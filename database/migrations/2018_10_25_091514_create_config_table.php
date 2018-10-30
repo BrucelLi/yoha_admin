@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateYohaConfigTable extends Migration
+class CreateConfigTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateYohaConfigTable extends Migration
      */
     public function up()
     {
-        Schema::create('yoha_config', function (Blueprint $table) {
+        Schema::create('config', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100)->comment('配置名称');
             $table->string('tag', 100)->comment('配置的英文标签（全大写加下划线）');
@@ -36,6 +36,6 @@ class CreateYohaConfigTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('yoha_config');
+        Schema::dropIfExists('config');
     }
 }

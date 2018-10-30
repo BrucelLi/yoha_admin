@@ -8,7 +8,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminUserModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TestController extends Controller
 {
@@ -18,17 +20,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $data = [
-            'code' => 0,
-            'message' => 'OK',
-            'data' => [
-                'name' => 'lxl',
-                'age' => 20
-            ]
-        ];
-        //return response()->header('Access-Control-Allow-Origin','*')->json($data);
-        return response($data)
-            ->header('Access-Control-Allow-Origin','*')
-            ->header('Content-Type', 'application/json');
+        Log::info('test');
+        dd(22);
     }
 }
