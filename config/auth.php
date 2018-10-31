@@ -43,7 +43,7 @@ return [
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'manage',
         ],
     ],
 
@@ -68,6 +68,12 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        //后台登录驱动
+        'manage' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\AdminUserModel::class,
+            'table' => 'admin_user'
         ],
 
         // 'users' => [
