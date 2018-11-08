@@ -21,6 +21,18 @@ final class ResponseCode
     // 登录过期
     const HTTP_RESPONSE_LOGIN_EXPIRE = 531;
 
+    // 密码错误
+    const  HTTP_RESPONSE_PASSWORD_ERROR = 532;
+
+    // 密码多次错误
+    const HTTP_RESPONSE_PASSWORD_MANG_ERROR = 533;
+
+    // 账号被禁用
+    const HTTP_USER_LOCK = 534;
+
     // 未知错误
     const HTTP_RESPONSE_NOT_KNOW = 560;
+
+    // 没有权限
+    const HTTP_RESPONSE_NOT_PERMISSION = 700;
 }

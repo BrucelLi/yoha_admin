@@ -163,6 +163,9 @@ return [
         // 模型ServiceProvider
         App\Providers\ModelServiceProvider::class,
 
+        // 加载公共模型
+        Yoha\Data\Provider::class,
+
     ],
 
     /*

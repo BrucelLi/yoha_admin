@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Services\LoginService;
 use App\Util\Captcha;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -27,6 +28,12 @@ class LoginController extends Controller
         $this->service = $service;
     }
 
+    /**
+     * 获取验证码
+     * [getCaptcha description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function getCaptcha(Request $request)
     {
         //生成验证码图片的Builder对象，配置相应属性
@@ -37,6 +44,7 @@ class LoginController extends Controller
     }
 
     /**
+     * 注册
      * @param Request $request
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
@@ -73,7 +81,7 @@ class LoginController extends Controller
         );
 
         if ($check->fails()) {
-            return $this->error($check->errors()->first(),ResponseCode::HTTP_RESPONSE_PARAM_ERROR);
+            return $this->error($check->errors()->first(), ResponseCode::HTTP_RESPONSE_PARAM_ERROR);
         }
 
         $res = $this->service->register(
@@ -82,10 +90,68 @@ class LoginController extends Controller
             $request->input('password')
         );
 
-        dd(555, $res);
         if (empty($res)) {
-            return $this->error('注册失败，请联系管理员！',ResponseCode::HTTP_RESPONSE_NOT_KNOW);
+            return $this->error('注册失败，请联系管理员！', ResponseCode::HTTP_RESPONSE_NOT_KNOW);
         }
-        return $this->render($request->all(), '注册成功');
+        return $this->render('', '注册成功');
+    }
+
+    /**
+     * 登录
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function login(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|exists:admin_user,username',
+                'password' => 'required|string|max:120',
+                'cap' => 'required|string|captcha',
+            ],
+            [
+                'name.required' => '用户姓名不能为空',
+                'name.string' => '用户名必须是字符串',
+                'name.exists' => '用户名不存在',
+
+                'password.required' => '密码不能为空',
+                'password.string' => '密码必须是字符串',
+                'password.max' => '密码长度不能超过max',
+
+                'cap.required' => '验证码不能为空',
+                'cap.string' => '验证码必须是字符串',
+                'cap.captcha' => '验证码不正确',
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors()->first(), ResponseCode::HTTP_RESPONSE_PARAM_ERROR);
+        }
+
+        $data = $this->service->login(
+            $request->input('name'),
+            $request->input('password')
+        );
+
+         if ($data['code'] != ResponseCode::HTTP_RESPONSE_OK) {
+            return $this->error($data['message'], $data['code']);
+        }
+        return $this->render($data['data'], '登录成功');
+    }
+
+    /**
+     * 退出登录
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logOut(Request $request)
+    {
+        if (Auth::guard('api')->check()) {
+            Auth::guard('api')->user()->token()->delete();
+        }
+
+        return $this->render('', '登出成功');
     }
 }

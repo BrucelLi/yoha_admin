@@ -24,4 +24,21 @@ interface AdminUserRepository
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|object
      */
     public function getUserById($id);
+
+    /**
+     * 根据用户名获取用户
+     * @param $name string 用户名
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|object
+     */
+    public function getUserByPwd($name);
+
+    /**
+     * 登录后更新用户信息
+     * @param $name string 名称
+     * @param $loginTime integer 登录次数
+     * @param $token string 记住密码token
+     * @return int
+     */
+    public function loginUpdate($name, $loginTime, $token);
+
 }

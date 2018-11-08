@@ -13,31 +13,35 @@ if (!function_exists('testLxl')) {
     }
 }
 
-if (!function_exists('encryptPwd')) {
-
+if (!function_exists('getSysConfig')) {
     /**
-     * 密码加密
-     * @param $pwd 密码
-     * @return bool|string
+     * 获取配置
+     * @param $name string 英文标识
+     * @return mixed
      */
-    function encryptPwd($pwd)
+    function getSysConfig($name)
     {
-        $options = [
-            'cost' => 12,
-        ];
-        return password_hash($pwd, PASSWORD_BCRYPT, $options);
+        $configKey = "yoha_system_config10";
+        $config = \Illuminate\Support\Facades\Cache::remember($configKey, 24*60, function () {
+            return Yoha\Data\Models\ConfigModel::query()
+                ->where('status',  Yoha\Data\Models\ConfigModel::YOHA_CONFIG_STATUS_ON)
+                ->get();
+        });
+
+        $configV = $config->where('tag', $name)->first();
+
+        return empty($configV) ? '' : $configV->value;
     }
 }
 
-if (!function_exists('verifyPwd')) {
+if (!function_exists('getLoginToken')) {
     /**
-     * 验证密码
-     * @param $pwd string 用户输入的密码
-     * @param $hash string 数据库的密码
-     * @return bool
+     * 颁发登录token
+     * @param $name string 名字
+     * @param $pwd string 密码
+     * @return string
      */
-    function verifyPwd($pwd, $hash)
-    {
-        return password_verify($pwd, $hash);
+    function getLoginToken($name, $pwd) {
+        return (new \App\Util\OAuth2())->getTokenByPassword($name, $pwd);
     }
 }

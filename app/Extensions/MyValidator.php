@@ -127,8 +127,7 @@ class MyValidator extends Validator
     public static function validateCaptcha($attribute, $value, $parameters)
     {
         $cacheKey = $value;
-        $keyValue = Cache::get($cacheKey);
-        Cache::forget($cacheKey);
+        $keyValue = Cache::pull($cacheKey);
         if ($keyValue == $value) {
             return true;
         } else {

@@ -42,8 +42,8 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'manage',
+            'driver' => 'passport',
+            'provider' => 'admin',
         ],
     ],
 
@@ -70,9 +70,9 @@ return [
             'model' => App\User::class,
         ],
         //后台登录驱动
-        'manage' => [
+        'admin' => [
             'driver' => 'eloquent',
-            'model' => App\Models\AdminUserModel::class,
+            'model' => Yoha\Data\Models\AdminUserModel::class,
             'table' => 'admin_user'
         ],
 
@@ -105,4 +105,10 @@ return [
         ],
     ],
 
+    'oauth_client' => [
+        'password' => [
+            'client_id' => '1',
+            'client_secret' => 'z5nj0LEukbghDWWMz46cfsC9X3tj0f5NX94WkYx3'
+        ],
+    ],
 ];

@@ -15,19 +15,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(
-    [
-        'namespace' => 'Admin',
-        'prefix'    => 'admin',
-    ],
-    function () {
-        Route::get('/test', 'TestController@test');
-        Route::group(
-            [],
-            function () {
-                Route::get('/captcha', 'LoginController@getCaptcha');
-                Route::post('/reg', 'LoginController@reg');
-            }
-        );
-    }
-);

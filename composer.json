@@ -9,8 +9,10 @@
         "fideloper/proxy": "^4.0",
         "gregwar/captcha": "^1.1",
         "laravel/framework": "5.7.*",
+        "laravel/passport": "^7.0",
         "laravel/tinker": "^1.0",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "yoha/data":"dev-master"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -61,5 +63,11 @@
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories":[
+        {
+            "type": "vcs",
+            "url":"git@gitee.com:brucelli/yoha_admin_model.git"
+        }
+    ]
 }

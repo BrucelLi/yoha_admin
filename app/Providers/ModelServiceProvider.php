@@ -39,6 +39,16 @@ class ModelServiceProvider extends ServiceProvider
             \App\Repositories\User\Contracts\AdminUserRepository::class,
             \App\Repositories\User\AdminUserRepository::class
         );
+
+        $this->app->singleton(
+            \App\Repositories\Common\Contracts\ConfigRepository::class,
+            \App\Repositories\Common\ConfigRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\User\Contracts\AdminUserLogRepository::class,
+            \App\Repositories\User\AdminUserLogRepository::class
+        );
     }
 
     /**
@@ -50,6 +60,8 @@ class ModelServiceProvider extends ServiceProvider
     {
         return [
             \App\Repositories\User\Contracts\AdminUserRepository::class,
+            \App\Repositories\Common\Contracts\ConfigRepository::class,
+            \App\Repositories\User\Contracts\AdminUserLogRepository::class,
         ];
     }
 }

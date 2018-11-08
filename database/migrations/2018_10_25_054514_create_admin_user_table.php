@@ -16,8 +16,10 @@ class CreateAdminUserTable extends Migration
         Schema::create('admin_user', function (Blueprint $table) {
             $table->increments('id');
             $table->string('phone', '30')->comment('手机号');
-            $table->string('name','50')->default('')->comment('名称');
+            $table->string('username','50')->default('')->comment('名称');
+            $table->string('email',50)->default('')->comment('邮箱');
             $table->string('password', '200')->comment('密码');
+            $table->text('auth_token')->comment('登录token');
             $table->string('remember_token', 200)->nullable()->comment('记住登录');
             $table->tinyInteger('group')->default(0)->comment('所属分组;0:未设置');
             $table->tinyInteger('status')->default(1)->comment('启用状态;1:申请;2:启用;3:禁用');
@@ -26,7 +28,7 @@ class CreateAdminUserTable extends Migration
             $table->timestamps();
 
             $table->index('phone');
-            $table->index('name');
+            $table->index('username');
             $table->unique('phone');
         });
     }

@@ -22,18 +22,23 @@ Route::group(
         Route::group(
             [],
             function () {
-                Route::get('/test', 'TestController@test');
-                Route::get('/captcha', 'LoginController@getCaptcha');
-                Route::post('/reg', 'LoginController@reg');
+                Route::get('test', 'TestController@test');
+                Route::get('captcha', 'LoginController@getCaptcha');
+                Route::post('reg', 'LoginController@reg');
+                Route::post('login', 'LoginController@login');
             }
         );
         // 需要登录验证的路由组
         Route::group(
             [
-                'middleware' => 'auth:api'
+                'middleware' => ['auth:api', 'admin']
             ],
             function () {
-                Route::get('/user', 'TestController@test');
+                Route::post('logout', 'LoginController@logout');
+                Route::get('user', function (Request $request) {
+                    $test =  \Illuminate\Support\Facades\Auth::guard('api')->guest();
+                    return response()->json($test);
+                });
             }
         );
     }
